@@ -1,13 +1,4 @@
-update: function(event, ui) {
-          // Get the new index of the moved element
-          var newIndex = ui.item.index();
-          
-          // Get the original index of the moved element
-          var originalIndex = ui.item.data('originalIndex');
-          
-          // Move the element in the original array
-          scope.$apply(function() {
-            scope[attrs.arrayName].splice(newIndex, 0, 
-              scope[attrs.arrayName].splice(originalIndex, 1)[0]);
-          });
-        }
+ if ($.contains(element[0], ui.item[0])) {
+            // If it is, cancel the sort
+            event.preventDefault();
+          }
