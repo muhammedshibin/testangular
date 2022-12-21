@@ -1,4 +1,6 @@
-var newIndex = ui.item.index();
+update: function(event, ui) {
+          // Get the new index of the moved element
+          var newIndex = ui.item.index();
           
           // Get the original index of the moved element
           var originalIndex = ui.item.data('originalIndex');
@@ -8,3 +10,4 @@ var newIndex = ui.item.index();
             scope[attrs.arrayName].splice(newIndex, 0, 
               scope[attrs.arrayName].splice(originalIndex, 1)[0]);
           });
+        }
