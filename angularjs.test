@@ -1,24 +1,37 @@
-angular.module('myApp').directive('dragAndSort', function() {
+app.directive('sortableContainer', function() {
   return {
-    restrict: 'A',
     link: function(scope, element, attrs) {
-      var listItems = element.find('li');
-      angular.forEach(listItems, function(listItem) {
-        var currentIndex;
-        var isDragging = false;
-        angular.element(listItem).bind('mousedown', function(event) {
-          currentIndex = angular.element(listItem).index();
-          isDragging = true;
+      element.attr('draggable', true);
+
+      element.on('dragenter', function(event) {
+        event.preventDefault();
+      });
+
+      element.on('dragover', function(event) {
+        event.preventDefault();
+      });
+
+      element.on('drop', function(event) {
+        var startIndex = event.dataTransfer.getData('text/plain');
+        var endIndex = Array.prototype.indexOf.call(element[0].children, event.target.parentNode);
+
+        scope.$apply(function() {
+          scope.items.splice(endIndex, 0, scope.items.splice(startIndex, 1)[0]);
         });
-        angular.element(listItem).bind('mousemove', function(event) {
-          if (isDragging) {
-            // Update the position of the item
-          }
-        });
-        angular.element(listItem).bind('mouseup', function(event) {
-          isDragging = false;
-          // Update the index of the item in the list
-        });
+
+        event.preventDefault();
+      });
+    }
+  };
+});
+
+app.directive('draggableItem', function() {
+  return {
+    link: function(scope, element, attrs) {
+      element.attr('draggable', true);
+
+      element.on('dragstart', function(event) {
+        event.dataTransfer.setData('text/plain', scope.$index);
       });
     }
   };
