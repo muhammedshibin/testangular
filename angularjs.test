@@ -1,38 +1,10 @@
-app.directive('sortableContainer', function() {
-  return {
-    link: function(scope, element, attrs) {
-      element.attr('draggable', true);
-
-      element.on('dragenter', function(event) {
-        event.preventDefault();
-      });
-
-      element.on('dragover', function(event) {
-        event.preventDefault();
-      });
-
-      element.on('drop', function(event) {
-        var startIndex = event.dataTransfer.getData('text/plain');
-        var endIndex = Array.prototype.indexOf.call(element[0].children, event.target.parentNode);
-
-        scope.$apply(function() {
-          scope.items.splice(endIndex, 0, scope.items.splice(startIndex, 1)[0]);
-        });
-
-        event.preventDefault();
-      });
-    }
-  };
-});
-
-app.directive('draggableItem', function() {
-  return {
-    link: function(scope, element, attrs) {
-      element.attr('draggable', true);
-
-      element.on('dragstart', function(event) {
-        event.dataTransfer.setData('text/plain', scope.$index);
-      });
-    }
-  };
-});
+var newIndex = ui.item.index();
+          
+          // Get the original index of the moved element
+          var originalIndex = ui.item.data('originalIndex');
+          
+          // Move the element in the original array
+          scope.$apply(function() {
+            scope[attrs.arrayName].splice(newIndex, 0, 
+              scope[attrs.arrayName].splice(originalIndex, 1)[0]);
+          });
