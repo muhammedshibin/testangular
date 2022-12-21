@@ -1,0 +1,25 @@
+angular.module('myApp').directive('dragAndSort', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var listItems = element.find('li');
+      angular.forEach(listItems, function(listItem) {
+        var currentIndex;
+        var isDragging = false;
+        angular.element(listItem).bind('mousedown', function(event) {
+          currentIndex = angular.element(listItem).index();
+          isDragging = true;
+        });
+        angular.element(listItem).bind('mousemove', function(event) {
+          if (isDragging) {
+            // Update the position of the item
+          }
+        });
+        angular.element(listItem).bind('mouseup', function(event) {
+          isDragging = false;
+          // Update the index of the item in the list
+        });
+      });
+    }
+  };
+});
